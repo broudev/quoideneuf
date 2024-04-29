@@ -1,0 +1,45 @@
+
+<div  data-margin-top="80" >
+    <div class="">
+        <h1 class="mb-2 mt-2 text-danger">
+            Actualités populaires
+        </h1>
+        <hr class="my_hr mt-1">
+        <div class="row justify-content-center">
+            @for (popular_news of _list_popular_news; track $index) {
+
+                <div class="col-12 px-0" >
+                    <div class="card tns-item tns-slide-cloned tns-slide-active">
+                        <div class="row g-3">
+                            <div class="col-4">
+                                <a [routerLink]="['/article',popular_news.slug]"
+                                    class="btn-link stretched-link text-reset " >
+                                    <img class="rounded-3" [src]="popular_news.media_url" alt="">
+                                </a>
+
+                            </div>
+                            <div class="col-8">
+                                <a [routerLink]="['/article',popular_news.slug]"
+                                    class="btn-link stretched-link text-reset " >
+                                    {{ popular_news.titre }}
+                                </a>
+                                <ul class="nav nav-divider1 align-items-center small">
+                                    <li class="nav-item">
+                                        <span role="button" class="text-body">
+                                            <i class="far fa-eye me-1"></i>
+                                        </span>
+                                        <strong class="me-1"> {{ popular_news.counter }} </strong>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my_hr my-2">
+                </div>
+
+            }
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,30 @@
+
+<div class="row">
+    <div class="col-12">
+
+        <div class="customer_wrapper">
+            <div class="icon"><i id="left" class="fas fa-angle-left "></i></div>
+            <ul class="tabs-box">
+                @defer (on timer(2000)) {
+                    @for (events of _list_events; track $index) {
+
+                        <li class="tab" (click)="gotToEventsNews(events)">
+                            {{ events.keywords }}
+                        </li>
+
+                    }
+                }@placeholder{
+                    @for (events of _list_events; track $index) {
+
+                        <li class="tab placeholder" aria-hidden="true">
+                            Chargement...
+                        </li>
+
+                    }
+                }
+
+            </ul>
+            <div class="icon"><i id="right" class="fas fa-angle-right "></i></div>
+        </div>
+    </div>
+</div>

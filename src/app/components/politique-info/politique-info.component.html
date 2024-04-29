@@ -1,0 +1,47 @@
+<div class="row g-3">
+
+    @for (item_politique of politique_list; track $index) {
+
+
+        <div class="col-lg-4 col-sm-6">
+            <mat-card class="example-card ">
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{ item_politique.author }}</mat-card-title>
+                    <mat-card-subtitle>{{ 'Journaliste | ' + '  ' }}  {{ item_politique.created_at | transformDate: " dd MMMM yyyy, à HH:mm" }}</mat-card-subtitle>
+                </mat-card-header>
+                <a [routerLink]="['/article',item_politique.slug]"  class="btn-link stretched-link text-reset fw-bold">
+                    <img mat-card-image [src]="item_politique.media_url" alt="Image article quoideneuf">
+                </a>
+
+                <mat-card-content>
+                    <a [routerLink]="['/article',item_politique.slug]" class="btn-link stretched-link" >
+                        {{item_politique.titre }}
+                    </a>
+                </mat-card-content>
+                <mat-card-actions class="d-flex justify-content-between">
+                    <span>
+                        <i class="fa fa-eye text-primary"></i> {{ item_politique.counter }} <span>vue(s)</span>
+                    </span>
+                    <span  class="badge text-dark">
+                        @if (item_politique.flag != null) {
+                            <img
+                                class="rounded me-2"
+                                [src]="item_politique.flag"
+                                alt="Image article quoideneuf"
+                                style="width: 30px !important; height: 20px !important"
+                            />
+                        }
+                        @if (item_politique.flag == null) {
+                            <i  class="fas fa-circle me-2 small fw-bold"></i>
+                        }
+                        {{ item_politique.rubrique }}
+                    </span>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+
+    }
+
+</div>

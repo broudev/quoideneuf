@@ -1,0 +1,101 @@
+<section class="pt-4">
+    <div class="container-fluid px-5">
+        <div class="row">
+            <div class="col-12">
+
+
+                <div class="bg-blue bg-opacity-10 text-center rounded-3 p-4">
+                    <h1 class="text-white fw-bold fst-italic">{{ keyword }}</h1>
+                    <nav class="d-flex justify-content-center"
+                        aria-label="breadcrumb">
+                        <ol class="breadcrumb breadcrumb-dots mb-0">
+                            <li class="breadcrumb-item">
+                                <a routerLink="/" class="fw-bolder text-red">
+                                    <i class="bi bi-house me-1 fw-bolder text-red"></i> Accueil
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item text-white">Evénement</li>
+                        </ol>
+                    </nav>
+                </div>
+
+                <style>
+                    .bg-blue{
+                        background:
+                        linear-gradient(90deg, rgba(35,50,102,0.8841911764705882) 0%, rgba(35,50,102,0.8365721288515406) 100%)
+                        , url('assets/img/news-banner.png') repeat center !important;
+                        background-size: 20%!important;
+                        width: 100% !important;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="position-relative pt-0">
+    <div class="container-fluid px-5">
+        <div class="row">
+
+            @for (item of _list_articles_by_keywords | paginate: { itemsPerPage: 12, currentPage: p }; track $index ) {
+
+                @defer (on timer(3000)) {
+                    <div  class="col-sm-6 col-lg-4">
+                        <mat-card class="example-card mb-3">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image"></div>
+                                <mat-card-title>{{ item.author }}</mat-card-title>
+                                <mat-card-subtitle>{{ 'Journaliste | ' + '  ' }}  {{ item.created_at | transformDate: " le dd MMMM yyyy, à HH:mm" }}</mat-card-subtitle>
+                            </mat-card-header>
+                            <a [routerLink]="['/article',item.slug]"  class="btn-link stretched-link text-reset fw-bold">
+                                <img mat-card-image [src]="item.media_url" alt="Image article quoideneuf">
+                            </a>
+
+                            <mat-card-content>
+                                <a [routerLink]="['/article',item.slug]"  >
+                                    {{item.titre }}
+                                </a>
+                            </mat-card-content>
+                            <mat-card-actions class="d-flex justify-content-between">
+                                <span>
+                                    <i class="fa fa-eye text-primary"></i> {{ item.counter }} <span>vue(s)</span>
+                                </span>
+                                <span  class="badge text-dark">
+                                    @if (item.flag != null) {
+                                        <img
+                                            class="rounded me-2"
+                                            [src]="item.flag"
+                                            alt="Image article quoideneuf"
+                                            style="width: 30px !important; height: 20px !important"
+                                        />
+                                    }
+                                    @if (item.flag == null) {
+                                        <i  class="fas fa-circle me-2 small fw-bold"></i>
+                                    }
+                                    {{ item.rubrique }}
+                                </span>
+                            </mat-card-actions>
+                        </mat-card>
+
+                    </div>
+                }@placeholder {
+                    <app-news-card-placeholder />
+                }
+            }
+
+        </div>
+
+
+
+    </div>
+
+    <nav class="mb-5 d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item">
+                <pagination-controls
+                    (pageChange)="p = $event" previousLabel="Précédent" nextLabel="Suivant">
+                </pagination-controls>
+            </li>
+        </ul>
+    </nav>
+</section>

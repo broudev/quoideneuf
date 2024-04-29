@@ -1,0 +1,226 @@
+
+<section class="pt-4">
+    <div class="container-fluid">
+        <div class="row ">
+
+            <div class="col-lg-4 col-sm-12 text-uppercase ps-0 mb-3 text-center">
+                <button mat-raised-button (click)="returnBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                    Page précédente
+                </button>
+
+            </div>
+            <div class="col-lg-4 col-sm-12 mb-3 text-center">
+                <share-buttons  class="mat-fab rounded-circle"
+                    theme="material-dark"
+                    [include]="['facebook', 'twitter', 'whatsapp']"
+                    [show]="show"
+                    [autoSetMeta]= true
+                    [url]="url"
+                    [title]="title"
+                    [description]="title"
+                    [image]="media_url">
+                </share-buttons>
+            </div>
+            <div class="col-lg-4 col-sm-12 text-center">
+                <span class="badge text-bg-primary mb-2">
+
+                    @if (flag != null){
+                        <img
+                            class="rounded me-2"
+                            [src]="flag"
+                            alt="Image"
+                            style="width: 30px !important; height: 20px !important"
+                        />
+                    }
+                    @if (flag == null){
+                        <i  class="fas fa-circle me-2 small fw-bold"></i>
+                    }
+                    {{ rubrique }}
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="pb-3 pb-lg-5">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+
+                <h1 class="fw-bolder text-center text-lg-start" style="font-size: 28px !important;" >{{ title }}</h1>
+            </div>
+            <p class="lead " > {{ lead }}</p>
+        </div>
+    </div>
+</section>
+
+<section class="pt-0">
+    <div class="container-fluid position-relative" data-sticky-container>
+        <div class="row">
+            <!-- Left sidebar START -->
+            <div class="col-lg-2">
+                <div
+                    class="text-start text-lg-center mb-5"
+                    data-sticky
+                    data-margin-top="80"
+                    data-sticky-for="991"
+                >
+                    <!-- Author info -->
+                    <div class="position-relative text-center">
+                        <div class="avatar avatar-xl">
+                            <img
+                                class="avatar-img rounded-circle"
+                                src="assets/img/avatart_blanc.png"
+                                alt="avatar"
+                            />
+                        </div>
+                        <a role="button" class="h5 stretched-link mt-2 mb-0 d-block text-center">
+                            <span class="me-2"></span>
+                            {{ author }}
+                        </a>
+                        <p class="text-center"><strong>* Journaliste *</strong></p>
+                    </div>
+                    <hr class="d-none d-lg-block" />
+                    <!-- Card info -->
+                    <ul class="list-inline list-unstyled">
+
+                        <li class="list-inline-item d-lg-block my-lg-2">
+                            Le <strong class="me-1">{{ date | transformDate: 'd MMMM yyyy' }}</strong>
+                        </li>
+
+                        <li class="list-inline-item d-lg-block my-lg-2">
+                            à  <strong class="me-1">{{ date | transformDate: 'HH:mm' }}</strong>
+                        </li>
+
+
+                        <li class="list-inline-item d-lg-block my-lg-2">
+                            <i class="far fa-eye me-1"></i>  <strong class="me-1 text-warning">{{ counter }}</strong> Vu(e)s
+                        </li>
+
+                    </ul>
+                    <!-- Tags -->
+                    <ul class="list-inline text-primary-hover mt-0 mt-lg-3">
+                        @for (rubrique of list_news_rubrique; track $index) {
+                            <li class="list-inline-item">
+                                <a class="text-body" [routerLink]="['/category',rubrique.slug]">#{{ rubrique.rubrique }}</a>
+                            </li>
+                        }
+                        @for (rubriques of list_others_rubrique; track $index) {
+
+                            <li class="list-inline-item">
+                                <a class="text-body"[routerLink]="['/category',rubriques.slug]">#{{ rubriques.rubrique }}</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <!-- Left sidebar END -->
+
+            <!-- Main Content START -->
+            <div class="col-lg-7 mb-5">
+                <!-- Image -->
+                <figure class="figure mt-2">
+
+                    <img class="rounded" [src]="media_url"
+                            alt="Image article quoideneuf"
+                        />
+
+                    <figcaption class="figure-caption text-center">
+                        (Image via:
+                        <a class="text-reset" routerLink="/">www.quoideneuf.info</a>)
+                    </figcaption>
+                </figure>
+
+                <div [innerHTML]="contents"></div>
+
+
+				<div class="mt-5">
+					<h1 class="my-3">
+                        <i class="bi bi-symmetry-vertical me-2"></i>
+                        <strong class="fst-italic fw-bolder">Articles similaires</strong>:
+                    </h1>
+					<div class="tiny-slider arrow-hover arrow-blur arrow-white arrow-round">
+						<div class="tiny-slider-inner">
+
+							<owl-carousel-o [options]="customOptions2" class="mx-0 px-0 py-2">
+                                @for (element of _liste_similar_article; track $index) {
+
+                                    <ng-template carouselSlide>
+
+                                        <mat-card class="example-card me-3">
+                                            <mat-card-header>
+                                                <div mat-card-avatar class="example-header-image"></div>
+                                                <mat-card-title>{{ element.author }}</mat-card-title>
+                                                <mat-card-subtitle>{{ 'Journaliste | ' + '  ' }}  {{ element.created_at | transformDate: " le dd MMMM yyyy, à HH:mm" }}</mat-card-subtitle>
+                                            </mat-card-header>
+                                            <a [routerLink]="['/article',element.slug]"  class="btn-link stretched-link text-reset fw-bold">
+                                                <img mat-card-image [src]="element.media_url" alt="Image article quoideneuf">
+                                            </a>
+
+                                            <mat-card-content>
+                                                <a [routerLink]="['/article',element.slug]"  class="btn-link">
+                                                    {{element.titre }}
+                                                </a>
+                                            </mat-card-content>
+                                            <mat-card-actions class="d-flex justify-content-between">
+                                                <span>
+                                                    <i class="fa fa-eye text-primary"></i> {{ element.counter }} <span>vue(s)</span>
+                                                </span>
+                                                <span  class="badge text-dark d-flex justify-center">
+                                                    @if (element.flag != null) {
+                                                        <img
+                                                            class="rounded me-2"
+                                                            [src]="element.flag"
+                                                            alt="Image article quoideneuf"
+                                                            style="width: 30px !important; height: 20px !important"
+                                                        />
+                                                    }
+                                                    @if (element.flag == null) {
+                                                        <i  class="fas fa-circle me-2 small fw-bold"></i>
+                                                    }
+                                                    {{ element.rubrique }}
+                                                </span>
+                                            </mat-card-actions>
+                                        </mat-card>
+
+                                    </ng-template>
+                                }
+                            </owl-carousel-o>
+
+						</div>
+					</div>
+				</div>
+
+            </div>
+            <!-- Main Content END -->
+
+            <!-- right sidebar START -->
+            <div class="col-lg-3">
+                <div data-sticky data-margin-top="80" data-sticky-for="991">
+                    <h1>Partager vers:</h1>
+                    <ul class="nav text-white-force">
+                        <share-buttons class="rounded-circle"
+                            theme="material-dark"
+                            [include]="['facebook', 'twitter', 'whatsapp']"
+                            [show]="show"
+                            [autoSetMeta]= true
+                            [url]="url"
+                            [title]="title"
+                            [description]="title"
+                            [image]="media_url">
+                        </share-buttons>
+
+                    </ul>
+                    <!-- Advertisement -->
+                    <div class="mt-4">
+                        <a role="button" class="d-block card-img-flash">
+                            <img src="assets/images/adv.png" alt="" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- right sidebar END -->
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,128 @@
+
+
+
+
+<section class="position-relative pt-0">
+	<div class="container-fluid plg-5 ">
+		<div class="row">
+            <div class="col-lg-9">
+                <div class="row gy-4 mb-2">
+                    <div class="col-12 text-uppercase ps-0">
+                        <h1 class="px-2 text-red fw-bolder rounded-1 text-uppercase" >
+                            À la une
+                        </h1>
+                        <hr>
+                    </div>
+                </div>
+
+                @defer (on timer(2000)) {
+                    <app-une-info  />
+                }@placeholder {
+                    <app-news-card-placeholder />
+                }
+
+
+            </div>
+            <div class="col-lg-3 mt-5 mt-lg-0 pe-0">
+                @defer (on timer(2000)) {
+
+                    <app-popular-info />
+                }@placeholder {
+                    <app-small-card-placeholder />
+                }
+
+            </div>
+
+
+            <div class="col-lg-9 col-12">
+                <div class="row g-3">
+                    <div class="col-12 text-uppercase ps-0">
+                        <h1 class="px-3 mb-1 pb-0 pt-2 fs-5 text-red fw-bolder rounded-1 text-uppercase" >
+                            <mat-icon>newspaper</mat-icon>
+                            Politique
+                        </h1>
+                        <hr class="my_hr">
+                    </div>
+                </div>
+                @defer (on timer(3000)) {
+
+                    <app-politique-info />
+                }@placeholder {
+                    <app-news-card-placeholder />
+                }
+            </div>
+            <div class="col-lg-3 col-12">
+                <div>
+                    <h1 class="mb-3 text-danger">
+                        ARCHIVES
+                    </h1>
+                    <hr class="my_hr">
+                    <!-- Item -->
+                    @defer (on timer(5000)) {
+                        <app-archive-info />
+                    }@placeholder {
+                        <app-card-archive-placeholder />
+                    }
+
+                </div>
+            </div>
+		</div>
+
+        <!--
+
+
+            <app-societe></app-societe>
+            <app-economique></app-economique>
+        -->
+	</div>
+</section>
+
+<section class="position-relative pt-0">
+    <div class="container-fluid px-0">
+        <div class="row g-3">
+            <div class="col-12 text-uppercase ps-0">
+                <h1 class="px-3 mb-1 pb-0 pt-2 text-red fw-bolder rounded-1 text-uppercase" >
+                    <mat-icon>newspaper</mat-icon>
+                    Economie</h1>
+                <hr class="my_hr mt-1">
+            </div>
+        </div>
+        @defer (on timer(3000)) {
+
+            <app-economie-info />
+        }@placeholder {
+            <app-news-card-placeholder />
+        }
+
+    </div>
+</section>
+
+<div class="container-fluid bg-light mb-3 py-2">
+    <div class="row justify-content-center">
+        <div class="col-8 card-img-flash">
+            <img
+                [src]="banner_url"
+                alt=""
+                class="img-responsive img-fluid"
+            />
+        </div>
+    </div>
+</div>
+
+<section class="bg-dark">
+	<div [class]="screenWidth > 992 ?'container-fluid px-5': 'container-fluid px-2'">
+		<app-media-news />
+	</div>
+</section>
+<style>
+    .icon-up{
+        transform: translateX(0px);
+        animation: rttl 3s linear infinite alternate;
+    }
+    @keyframes rttl {
+        0%, 0%{
+            transform: translateX(-5px);
+        }
+    }
+</style>
+

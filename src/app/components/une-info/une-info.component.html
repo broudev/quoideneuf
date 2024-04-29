@@ -1,0 +1,52 @@
+
+
+
+<div class="row gy-4 mb-3">
+
+    @for (article of _list_une_news; track $index) {
+        <div  class="col-sm-6 col-lg-4">
+            <mat-card class="example-card ">
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{ article.author }}</mat-card-title>
+                    <mat-card-subtitle>{{ 'Journaliste | ' + '  ' }}  {{ article.created_at | transformDate: " dd MMMM yyyy, à HH:mm" }}</mat-card-subtitle>
+                </mat-card-header>
+                <a [routerLink]="['/article',article.slug]"  class=" text-reset fw-bold">
+                    <img mat-card-image [src]="article.media_url" alt="Image article quoideneuf">
+                </a>
+
+                <mat-card-content>
+                    <a role="button"  [routerLink]="['/article',article.slug]"  class="btn-link stretched-link">
+                        {{article.titre }}
+                    </a>
+                </mat-card-content>
+                <mat-card-actions class="d-flex justify-content-between">
+                    <span>
+                        <i class="fa fa-eye text-primary"></i> {{ article.counter }} <span>vue(s)</span>
+                    </span>
+                    <span  class="badge text-dark">
+                        @if (article.flag != null) {
+                            <img
+                                class="rounded me-2"
+                                [src]="article.flag"
+                                alt="Image article quoideneuf"
+                                style="width: 30px !important; height: 20px !important"
+                            />
+                        }
+                        @if (article.flag == null) {
+                            <i  class="fas fa-circle me-2 small fw-bold"></i>
+                        }
+                        {{ article.rubrique }}
+                    </span>
+                </mat-card-actions>
+            </mat-card>
+
+        </div>
+    }
+
+    <div class="mb-3 mt-3">
+
+    </div>
+</div>
+
+

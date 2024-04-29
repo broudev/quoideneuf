@@ -1,0 +1,93 @@
+
+
+<section class="pt-4">
+    <div class="container-fluid px-5">
+
+        <div class="row ">
+
+            <div class="col-lg-6 col-sm-12 text-uppercase ps-0 mb-3 text-center">
+                <button mat-raised-button (click)="returnBack()">
+                    <mat-icon>arrow_back</mat-icon>
+                    Page précédente
+                </button>
+
+            </div>
+
+            <div class="col-lg-6 col-sm-12 text-end">
+                <h3 class=" mb-1 pb-0 pt-2 text-red fw-bolder rounded-1 text-uppercase " >
+                    <mat-icon>inventory_2</mat-icon>
+                    Archive de
+                    <span class="ms-2 fst-italic">
+                        &#10077;
+                        {{ _archive_data | transformDate: 'MMMM YYYY' }}
+                        &#x275E;
+                    </span>
+                </h3>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="position-relative pt-0">
+	<div class="container-fluid px-2">
+		<div class="row">
+			<!-- Card item START -->
+            @for (article of _list_article_by_article | paginate: { itemsPerPage: 12, currentPage: p } ; track $index) {
+
+                @defer (on timer(4000)) {
+                    <div  class="col-sm-6 col-lg-3">
+                        <mat-card class="example-card mb-3">
+                            <mat-card-header>
+                                <div mat-card-avatar class="example-header-image"></div>
+                                <mat-card-title>{{ article.author }}</mat-card-title>
+                                <mat-card-subtitle>{{ 'Journaliste | ' + '  ' }}  {{ article.created_at | transformDate: " dd MMMM yyyy, à HH:mm" }}</mat-card-subtitle>
+                            </mat-card-header>
+                            <a [routerLink]="['/article',article.slug]"  class="btn-link stretched-link text-reset fw-bold">
+                                <img mat-card-image [src]="article.media_url" alt="Image article quoideneuf">
+                            </a>
+
+                            <mat-card-content>
+                                <a [routerLink]="['/article',article.slug]"  >
+                                    {{article.titre }}
+                                </a>
+                            </mat-card-content>
+                            <mat-card-actions class="d-flex justify-content-between">
+                                <span>
+                                    <i class="fa fa-eye text-primary"></i> {{ article.counter }} <span>vue(s)</span>
+                                </span>
+                                <span  class="badge text-dark">
+                                    @if (article.flag != null) {
+                                        <img
+                                            class="rounded me-2"
+                                            [src]="article.flag"
+                                            alt="Image article quoideneuf"
+                                            style="width: 30px !important; height: 20px !important"
+                                        />
+                                    }
+                                    @if (article.flag == null) {
+                                        <i  class="fas fa-circle me-2 small fw-bold"></i>
+                                    }
+                                    {{ article.rubrique }}
+                                </span>
+                            </mat-card-actions>
+                        </mat-card>
+
+                    </div>
+                }@placeholder {
+                    <app-news-card-placeholder />
+                }
+            }
+			<!-- Card item END -->
+		</div> <!-- Row end -->
+
+        <!-- Pagination START -->
+        <nav class="mb-5 d-flex justify-content-center" aria-label="navigation">
+            <ul class="pagination d-inline-block d-md-flex justify-content-end">
+                <pagination-controls (pageChange)="p = $event" previousLabel="Précédent"
+                    nextLabel="Suivant"></pagination-controls>
+            </ul>
+        </nav>
+        <!-- Pagination END -->
+	</div>
+</section>

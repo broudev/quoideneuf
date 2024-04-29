@@ -1,0 +1,50 @@
+<div class="row g-3">
+
+
+    <!-- Card item START -->
+
+    @for (item_economie of economie_list; track $index) {
+
+        <div  class="col-sm-6 col-lg-3">
+            <mat-card class="example-card ">
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{ item_economie.author }}</mat-card-title>
+                    <mat-card-subtitle>{{ 'Journaliste | ' + '  ' }}  {{ item_economie.created_at | transformDate: " dd MMMM yyyy, à HH:mm" }}</mat-card-subtitle>
+                </mat-card-header>
+                <a [routerLink]="['/article',item_economie.slug]"  class="btn-link stretched-link text-reset fw-bold">
+                    <img mat-card-image [src]="item_economie.media_url" alt="Image article quoideneuf">
+                </a>
+
+                <mat-card-content>
+                    <a [routerLink]="['/article',item_economie.slug]"  class="btn-link stretched-link">
+                        {{item_economie.titre }}
+                    </a>
+                </mat-card-content>
+                <mat-card-actions class="d-flex justify-content-between">
+                    <span>
+                        <i class="fa fa-eye text-primary"></i> {{ item_economie.counter }} <span>vue(s)</span>
+                    </span>
+                    <span  class="badge text-dark">
+                        @if (item_economie.flag != null) {
+                            <img
+                                class="rounded me-2"
+                                [src]="item_economie.flag"
+                                alt="Image article quoideneuf"
+                                style="width: 30px !important; height: 20px !important"
+                            />
+                        }
+                        @if (item_economie.flag == null) {
+                            <i  class="fas fa-circle me-2 small fw-bold"></i>
+                        }
+                        {{ item_economie.rubrique }}
+                    </span>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    }
+    <div class="mb-3 mt-3">
+
+        <hr class="mt-0">
+    </div>
+</div>
